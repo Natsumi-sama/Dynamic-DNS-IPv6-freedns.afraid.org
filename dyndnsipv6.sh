@@ -9,7 +9,7 @@ do
                 echo "link-local address"
                 break
         fi
-	IPTemp=$(echo $i | grep -o -P "([0-9a-fA-F]{1,4}:[0-9a-fA-F]{1,4}:[0-9a-fA-F]{1,4})" | head -n 1)
+        IPTemp=$(echo $i | grep -o -P "([0-9a-fA-F]{1,4}:[0-9a-fA-F]{1,4}:[0-9a-fA-F]{1,4})" | head -n 1)
         if ping -c1 -I eth0 $IPTemp:1:0000:0000:0000:0000 &> /dev/null
         then
                 echo "ping successful"
