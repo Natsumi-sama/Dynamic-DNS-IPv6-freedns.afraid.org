@@ -9,17 +9,7 @@ do
                 echo "link-local address"
                 break
         fi
-		#find the colon
-		IPTemp=$(echo $i | cut -c -14)
-		if [ "${IPTemp: -1}" = ":" ]
-		then
-				IPTemp="$(echo $IPTemp | cut -c -13)"
-		else
-				if [ "$(echo ${IPTemp: -2} | cut -c 1)" = ":" ]
-				then
-						IPTemp="$(echo $IPTemp | cut -c -12)"
-				fi
-		fi
+	IPTemp=$(echo $i | grep -o -P "([0-9a-fA-F]{1,4}:[0-9a-fA-F]{1,4}:[0-9a-fA-F]{1,4})")
         if ping -c1 -I eth0 $IPTemp:1:0000:0000:0000:0000 &> /dev/null
         then
                 echo "ping successful"
