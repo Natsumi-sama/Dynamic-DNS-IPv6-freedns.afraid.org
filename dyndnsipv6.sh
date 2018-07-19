@@ -7,17 +7,17 @@ do
         if [ "${i:0:4}" = "fe80" ]
         then
                 echo "link-local address"
-                break
-        fi
-        IPTemp=$(echo $i | grep -o -P "([0-9a-fA-F]{1,4}:[0-9a-fA-F]{1,4}:[0-9a-fA-F]{1,4})" | head -n 1)
-        if ping -c1 -I eth0 $IPTemp:1:0000:0000:0000:0000 &> /dev/null
-        then
-                echo "ping successful"
-                IP=$IPTemp
         else
-                echo "deleted $i"
-                sudo ip -6 addr del $i/64 dev eth0
-        fi
+		IPTemp=$(echo $i | grep -o -P "([0-9a-fA-F]{1,4}:[0-9a-fA-F]{1,4}:[0-9a-fA-F]{1,4})" | head -n 1)
+		if ping -c1 -I eth0 $IPTemp:1:0000:0000:0000:0000 &> /dev/null
+		then
+			echo "ping successful"
+			IP=$IPTemp
+		else
+			echo "deleted $i"
+			sudo ip -6 addr del $i/64 dev eth0
+		fi
+	fi
 done
 
 if [ -z "$IP" ]
